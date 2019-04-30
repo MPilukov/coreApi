@@ -6,10 +6,15 @@ using WebApi.Models.Books;
 
 namespace WebApi.Controllers
 {
-    [Route("users")]
+    [Route("api/books")]
     public class BooksController : Controller
     {
         private readonly GetBookInfoRequestHandler _getBooknfoRequestHandler;
+
+        public BooksController(GetBookInfoRequestHandler getBookInfoRequestHandler)
+        {
+            _getBooknfoRequestHandler = getBookInfoRequestHandler;
+        }
         
         // GET
         public IActionResult Index()
@@ -17,7 +22,7 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpGet()]
+        [HttpGet("{id}")]
         public Task<BookData> Get(Guid id)
         {
             return _getBooknfoRequestHandler.Get(id);
