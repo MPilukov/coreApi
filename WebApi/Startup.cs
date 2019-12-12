@@ -20,6 +20,11 @@ namespace WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             
             services.AddScoped<GetBookInfoRequestHandler>();
+
+            services.AddDistributedRedisCache(option =>
+            {
+                option.Configuration = "webredis:6379,abortConnect=False;";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
