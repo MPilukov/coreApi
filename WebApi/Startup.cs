@@ -23,7 +23,7 @@ namespace WebApi
 
             services.AddDistributedRedisCache(option =>
             {
-                option.Configuration = "webredis:6379,abortConnect=False;";
+                option.Configuration = "webredis:6379";
             });
         }
 
