@@ -20,8 +20,9 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
-            
+
             services.AddScoped<GetBookInfoRequestHandler>();
+            services.AddScoped<CreateBookRequestHandler>();
 
             services.AddDistributedRedisCache(option =>
             {

@@ -12,11 +12,14 @@ namespace WebApi.Controllers
     {
         private readonly GetBookInfoRequestHandler _getBooknfoRequestHandler;
         private readonly IDistributedCache _distributedCache;
+        private readonly CreateBookRequestHandler _createBookRequestHandler;
 
-        public BooksController(GetBookInfoRequestHandler getBookInfoRequestHandler, IDistributedCache distributedCache)
+        public BooksController(GetBookInfoRequestHandler getBookInfoRequestHandler, 
+            IDistributedCache distributedCache, CreateBookRequestHandler createBookRequestHandler)
         {
             _getBooknfoRequestHandler = getBookInfoRequestHandler;
             _distributedCache = distributedCache;
+            _createBookRequestHandler = createBookRequestHandler;
         }
         
         // GET
@@ -31,10 +34,16 @@ namespace WebApi.Controllers
             return _getBooknfoRequestHandler.Get(id);
         }
 
-        [HttpGet("random")]
-        public async Task<string> GetValue(int id)
+        [HttpPost("")]
+        public Task<Guid> Create(Book book)
         {
-            var value = await _distributedCache.GetStringAsync("key");
+            return _createBookRequestHandler.Create(book);
+        }
+
+        [HttpGet("random")]
+        public async Task<string> GetValue()
+        {
+            var value = await _distributedCache.GetStringAsync("random_key");
             if (string.IsNullOrEmpty(value))
             {
                 value = "new";
@@ -42,7 +51,7 @@ namespace WebApi.Controllers
 
             value = value + " 1 ";
 
-            await _distributedCache.SetStringAsync("key", value);
+            await _distributedCache.SetStringAsync("random_key", value);
             return value;
         }
     }
