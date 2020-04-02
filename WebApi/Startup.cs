@@ -25,10 +25,9 @@ namespace WebApi
             services.AddScoped<GetBookInfoRequestHandler>();
             services.AddScoped<CreateBookRequestHandler>();
 
-            string connection = Environment.GetEnvironmentVariable("RedisConnection", EnvironmentVariableTarget.Process);
             services.AddDistributedRedisCache(option =>
             {
-                option.Configuration = Configuration.GetConnectionString(connection);
+                option.Configuration = Configuration.GetConnectionString("clientredis:6379,abortConnect=False");
             });
         }
 
