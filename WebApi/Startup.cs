@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using WebApi.BisinessLogic.Books;
 
 namespace WebApi
@@ -24,9 +25,10 @@ namespace WebApi
             services.AddScoped<GetBookInfoRequestHandler>();
             services.AddScoped<CreateBookRequestHandler>();
 
+            string connection = Environment.GetEnvironmentVariable("RedisConnection", EnvironmentVariableTarget.Process);
             services.AddDistributedRedisCache(option =>
             {
-                option.Configuration = Configuration.GetConnectionString("redis");
+                option.Configuration = Configuration.GetConnectionString(connection);
             });
         }
 
