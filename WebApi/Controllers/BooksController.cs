@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("")]
-        public Task<Guid> Create(Book book)
+        public Task<Guid> Create([FromBody] Book book)
         {
             return _createBookRequestHandler.Create(book);
         }
