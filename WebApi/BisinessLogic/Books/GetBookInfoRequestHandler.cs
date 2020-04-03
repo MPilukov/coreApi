@@ -1,9 +1,8 @@
 using Microsoft.Extensions.Caching.Distributed;
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using WebApi.Models.Books;
+using System.Text.Json;
 
 namespace WebApi.BisinessLogic.Books
 {
@@ -18,19 +17,15 @@ namespace WebApi.BisinessLogic.Books
 
         public async Task<BookData> Get(Guid id)
         {
-            var data = await _distributedCache.GetAsync($"Book_{id}");
+            var data = await _distributedCache.GetStringAsync($"Book_{id}");
 
-            BinaryFormatter formatter = new BinaryFormatter();
-            using (MemoryStream ms = new MemoryStream(data))
+            if (string.IsNullOrWhiteSpace(data))
             {
-                var obj = formatter.Deserialize(ms);
-                if (obj is BookData bookData)
-                {
-                    return bookData;
-                }
-
                 return null;
             }
+
+            var response = JsonSerializer.Deserialize<BookData>(data);
+            return response;
         }
     }
 }

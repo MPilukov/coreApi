@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using WebApi.BisinessLogic.Books;
 
 namespace WebApi
@@ -27,7 +26,7 @@ namespace WebApi
 
             services.AddDistributedRedisCache(option =>
             {
-                option.Configuration = Configuration.GetConnectionString("clientredis:6379,abortConnect=False");
+                option.Configuration = Configuration.GetConnectionString("redis"); ;
             });
         }
 
@@ -40,7 +39,6 @@ namespace WebApi
             }
 
             app.UseMvc();
-//            app.Run(async (context) => { await context.Response.WriteAsync("Hello World!"); });
         }
     }
 }
