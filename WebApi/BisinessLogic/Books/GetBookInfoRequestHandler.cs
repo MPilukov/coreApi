@@ -1,23 +1,23 @@
-using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Threading.Tasks;
 using WebApi.Models.Books;
 using System.Text.Json;
+using WebApi.Interfaces.Cache;
 
 namespace WebApi.BisinessLogic.Books
 {
     public class GetBookInfoRequestHandler
     {
-        private readonly IDistributedCache _distributedCache;
+        private readonly ICache _cache;
 
-        public GetBookInfoRequestHandler(IDistributedCache distributedCache)
+        public GetBookInfoRequestHandler(ICache cache)
         {
-            _distributedCache = distributedCache;
+            _cache = cache;
         }
 
         public async Task<BookData> Get(Guid id)
         {
-            var data = await _distributedCache.GetStringAsync($"Book_{id}");
+            var data = await _cache.GetAsync($"Book_{id}");
 
             if (string.IsNullOrWhiteSpace(data))
             {

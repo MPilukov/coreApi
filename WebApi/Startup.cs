@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.BisinessLogic.Books;
+using WebApi.Interfaces.Cache;
+using WebApi.Interfaces.Publish;
+using WebApi.Services.Cache;
+using WebApi.Services.Publish;
 
 namespace WebApi
 {
@@ -11,26 +15,26 @@ namespace WebApi
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public readonly IConfiguration Configuration;
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        private readonly IConfiguration _configuration;
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
 
+            services.AddScoped<IPublisher>(s => new Publisher(_configuration.GetConnectionString("rabbit")));
+            services.AddScoped<ICache>(s => new Cache(_configuration.GetConnectionString("redis")));
             services.AddScoped<GetBookInfoRequestHandler>();
             services.AddScoped<CreateBookRequestHandler>();
 
-            services.AddDistributedRedisCache(option =>
-            {
-                option.Configuration = Configuration.GetConnectionString("redis"); ;
-            });
+            //services.AddDistributedRedisCache(option =>
+            //{
+            //    option.Configuration = Configuration.GetConnectionString("redisForTest");
+            //});
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

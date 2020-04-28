@@ -1,20 +1,21 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using WebApi.Models.Books;
-using System.Text.Json;
+using WebApi.Interfaces.Publish;
+using RabbitMq.Messages.Books;
 
 namespace WebApi.BisinessLogic.Books
 {
     public class CreateBookRequestHandler
     {
-        private readonly IDistributedCache _distributedCache;
-        public CreateBookRequestHandler(IDistributedCache distributedCache)
+        private readonly IPublisher _publisher;
+
+        public CreateBookRequestHandler(IPublisher publisher)
         {
-            _distributedCache = distributedCache;
+            _publisher = publisher;
         }
 
-        public async Task<Guid> Create(Book book)
+        public Task<Guid> Create(Book book)
         {
             //if (string.IsNullOrWhiteSpace(book.Title))
             //{
@@ -30,11 +31,17 @@ namespace WebApi.BisinessLogic.Books
                 Title = book.Title,
             };
 
-            var data = JsonSerializer.Serialize<BookData>(bookData);
+            //var data = JsonSerializer.Serialize<BookData>(bookData);
+            //await _distributedCache.SetStringAsync($"Book_{id}", data);
 
-            await _distributedCache.SetStringAsync($"Book_{id}", data);
-            
-            return id;
+            _publisher.Publish(new CreateBookMessage
+            {
+                Id = id,
+                Price = book.Price,
+                Title = book.Title,
+            });
+
+            return Task.FromResult(id);
         }
     }
 }
