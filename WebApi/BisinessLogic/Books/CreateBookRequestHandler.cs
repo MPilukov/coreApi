@@ -22,17 +22,10 @@ namespace WebApi.BisinessLogic.Books
             //    throw new BadRequestException();
             //}
 
-            var id = Guid.NewGuid();
-
-            var bookData = new BookData
-            {
-                Id = id,
-                Price = book.Price,
-                Title = book.Title,
-            };
-
             //var data = JsonSerializer.Serialize<BookData>(bookData);
             //await _distributedCache.SetStringAsync($"Book_{id}", data);
+
+            var id = book.Id != Guid.Empty ? book.Id : Guid.NewGuid();
 
             _publisher.Publish(new CreateBookMessage
             {

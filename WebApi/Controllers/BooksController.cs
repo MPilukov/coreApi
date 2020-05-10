@@ -19,7 +19,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<BookData> Get(Guid id)
+        public Task<Book> Get(Guid id)
         {
             return _getBookInfoRequestHandler.Get(id);
         }

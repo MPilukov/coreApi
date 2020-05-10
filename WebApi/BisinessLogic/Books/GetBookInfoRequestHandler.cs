@@ -15,7 +15,7 @@ namespace WebApi.BisinessLogic.Books
             _cache = cache;
         }
 
-        public async Task<BookData> Get(Guid id)
+        public async Task<Book> Get(Guid id)
         {
             var data = await _cache.GetAsync($"Book_{id}");
 
@@ -24,7 +24,8 @@ namespace WebApi.BisinessLogic.Books
                 return null;
             }
 
-            var response = JsonSerializer.Deserialize<BookData>(data);
+            var response = JsonSerializer.Deserialize<Book>(data);
+
             return response;
         }
     }
