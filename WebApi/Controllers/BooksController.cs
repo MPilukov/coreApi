@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.BisinessLogic.Books;
+using WebApi.BusinessLogic.Books;
 using WebApi.Models.Books;
 
 namespace WebApi.Controllers
@@ -24,7 +24,7 @@ namespace WebApi.Controllers
             return _getBookInfoRequestHandler.Get(id);
         }
 
-        [HttpPost("")]
+        [HttpPost]
         public Task<Guid> Create([FromBody] Book book)
         {
             return _createBookRequestHandler.Create(book);

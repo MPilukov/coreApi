@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using WebApi.Models.Books;
 using WebApi.Interfaces.Publish;
-using RabbitMq.Messages.Books;
+using WebApi.BusinessLogic.Books.Messages;
 
-namespace WebApi.BisinessLogic.Books
+namespace WebApi.BusinessLogic.Books
 {
     public class CreateBookRequestHandler
     {
@@ -17,14 +17,6 @@ namespace WebApi.BisinessLogic.Books
 
         public Task<Guid> Create(Book book)
         {
-            //if (string.IsNullOrWhiteSpace(book.Title))
-            //{
-            //    throw new BadRequestException();
-            //}
-
-            //var data = JsonSerializer.Serialize<BookData>(bookData);
-            //await _distributedCache.SetStringAsync($"Book_{id}", data);
-
             var id = book.Id != Guid.Empty ? book.Id : Guid.NewGuid();
 
             _publisher.Publish(new CreateBookMessage

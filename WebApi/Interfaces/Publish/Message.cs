@@ -1,4 +1,4 @@
-﻿namespace RabbitMq.Messages
+﻿namespace WebApi.Interfaces.Publish
 {
     public class Message
     {

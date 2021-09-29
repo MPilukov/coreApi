@@ -12,7 +12,7 @@ namespace WebApi.Services.Publish
 
         public string Serialize(Type type)
         {
-            if (type.FullName.Contains("EasyNetQ"))
+            if (type.FullName != null && type.FullName.Contains("EasyNetQ"))
             {
                 return type + ":EasyNetQ";
             }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebApi.BisinessLogic.Books;
+using WebApi.BusinessLogic.Books;
 using WebApi.Interfaces.Cache;
 using WebApi.Interfaces.Publish;
 using WebApi.Services.Cache;
@@ -28,11 +28,6 @@ namespace WebApi
             services.AddScoped<ICache>(s => new Cache(_configuration.GetConnectionString("redis")));
             services.AddScoped<GetBookInfoRequestHandler>();
             services.AddScoped<CreateBookRequestHandler>();
-
-            //services.AddDistributedRedisCache(option =>
-            //{
-            //    option.Configuration = Configuration.GetConnectionString("redisForTest");
-            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

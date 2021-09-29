@@ -1,2 +1,5 @@
-# coreApi
-шаблон api на net core с примерами 
+# Overview
+web api for publish messages to rabbitmq for reader (like  [this](https://github.com/MPilukov/async)) 
+
+## Requirements
+- EasyNetQ

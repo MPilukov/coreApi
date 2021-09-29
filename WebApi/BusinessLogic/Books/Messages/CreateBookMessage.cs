@@ -1,6 +1,7 @@
 ﻿using System;
+using WebApi.Interfaces.Publish;
 
-namespace RabbitMq.Messages.Books
+namespace WebApi.BusinessLogic.Books.Messages
 {
     public class CreateBookMessage : Message
     {

@@ -4,7 +4,7 @@ using WebApi.Models.Books;
 using System.Text.Json;
 using WebApi.Interfaces.Cache;
 
-namespace WebApi.BisinessLogic.Books
+namespace WebApi.BusinessLogic.Books
 {
     public class GetBookInfoRequestHandler
     {
