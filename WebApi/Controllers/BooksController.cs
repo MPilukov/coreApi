@@ -19,9 +19,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<Book> Get(Guid id)
+        public async Task<Book> Get(Guid id)
         {
-            return _getBookInfoRequestHandler.Get(id);
+            return await _getBookInfoRequestHandler.Get(id);
         }
 
         [HttpPost]
