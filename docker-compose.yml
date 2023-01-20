@@ -11,6 +11,15 @@ services:
       - 'clientredis'
       - 'rabbitmq'
 
+  async:
+    image: pilyukovmp/async
+    depends_on:
+      - 'clientredis'
+      - 'rabbitmq'    
+    links:
+      - 'clientredis'
+      - 'rabbitmq'
+
   clientredis:
     image: redis
     command: redis-server --appendonly yes
