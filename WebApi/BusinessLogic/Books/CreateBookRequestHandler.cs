@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WebApi.Models.Books;
 using WebApi.Interfaces.Publish;
-using WebApi.BusinessLogic.Books.Messages;
+using Messages.Books;
 
 namespace WebApi.BusinessLogic.Books
 {

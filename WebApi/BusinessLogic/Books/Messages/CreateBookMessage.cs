@@ -1,7 +1,7 @@
 ﻿using System;
 using WebApi.Interfaces.Publish;
 
-namespace WebApi.BusinessLogic.Books.Messages
+namespace Messages.Books
 {
     public class CreateBookMessage : Message
     {
